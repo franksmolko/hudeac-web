@@ -50,9 +50,9 @@ body {
 .center{
     text-align: center;
     border: 3px solid forestgreen;
-    width: 50%;
-    height: 50%;
-    font-size: 3vh;
+    width: auto;
+    height: auto;
+    font-size: 2vh;
     margin: auto;
 }
 
