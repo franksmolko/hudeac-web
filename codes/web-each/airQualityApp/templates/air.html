@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html>
+
+<head>
+    
+    <title>{% block title %}Air Quality{% endblock %}</title>
+    <script src="{% static 'my_js.js' %}"></script>
+</head>
+
+
+
+{% block content %}
+<div style="text-align: center;">
+    </br>
+    <label for="airbox" ><b>Enter Zip Code</b></label></br>
+    </br>
+    <input type="text" id="airbox" name="airbox" style="background-color: lightgreen; border-radius: 10px; border: none; width: 300px; height: 40px;"></br>
+    </br>
+    <button id="get-data" class="btn green-btn">Submit</button>
+</div>
+
+<div id="index" style="text-align: center;">
+    </br>   
+    <p id="field1"></p>
+    </br>
+    <p id="field2"></p>
+    </br>
+    <p id="field3"></p>
+    </br>
+    <p id="field4"></p>
+</div>
+
+
+
+
+
+
+
+
+<script>
+    
+    document.getElementById('get-data').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    var zipCode = document.getElementById('airbox').value;
+    var distance = 25;
+  
+    submitZip(zipCode, distance);
+    });
+
+    function submitZip (zipCode, distance) {
+        var apiKey = '{{ api_key }}'
+        var url = `https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=${zipCode}&distance=${distance}&API_KEY=${apiKey}`
+        fetch(url)
+        .then(response => response.json())
+        .then(data=> {
+            var correct_dict = ""
+            var highest_data = 0
+            for (var i = 0; i < data.length; i++){
+                if (data[i].AQI > highest_data) {
+                    highest_data = data[i].AQI;
+                    correct_dict = data[i];
+                }
+            }
+            returnData(correct_dict);
+        })
+        
+    }
+
+    function returnData(correct_dict) {
+
+        document.getElementById('field1').innerHTML = '';
+        document.getElementById('field2').innerHTML = '';
+        document.getElementById('field3').innerHTML = '';
+        document.getElementById('field4').innerHTML = '';
+        
+
+        if (correct_dict === ""){
+            document.getElementById('field1').innerHTML = '<span style="color: red;"><i>Sorry, that zip code was not found in AirNow API. Please enter another.</i></span>';
+        }
+        
+        else {
+            var area = correct_dict.ReportingArea;
+            var pollutant = correct_dict.ParameterName;
+            var air = correct_dict.AQI;
+            var cat = correct_dict.Category;
+            var status = cat.Name;
+            document.getElementById("field1").innerHTML='Reporting Area: <b>' + area + '</b>';
+            document.getElementById("field2").innerHTML='Highest Pollutant: <b>' + pollutant + '</b>';
+            document.getElementById("field3").innerHTML='AQI: <b>' + air + '</b>';
+            document.getElementById("field4").innerHTML='Status: <b>' + status + '</b>';
+        }
+
+        infoBox = document.getElementById("index");
+
+        if (air < 51) {
+            infoBox.style.color = "green";
+        }
+
+        else if (air < 101) {
+            infoBox.style.color = "#B8860B";
+        }
+
+        else if (air < 151) {
+            infoBox.style.color = "orange";
+        }
+
+        else if (air < 201) {
+            infoBox.style.color = "red";
+        }
+
+        else if (air < 301) {
+            infoBox.style.color = "purple";
+        }
+
+        else if (air < 501) {
+            infoBox.style.color = "maroon";
+        }
+    }   
+
+</script>
+
+{% endblock %}
+</html>
+

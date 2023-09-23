@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html>
+<head>
+    <title>{% block title %}Photo Gallery{% endblock %}</title>
+</head>
+
+<body>
+    {% block content %}
+    <main>
+        {% for photo in gallery_urls%}
+        <div class="flex-item">
+            {% if forloop.counter|divisibleby:2 %}
+                <img src="{{ photo }}" width="20%" height="20%" class="img-fluid right">
+            {% else %}
+                <img src="{{ photo }}" width="20%" height="20%" class="img-fluid left">
+            {% endif %}
+        </div>
+        {% endfor %}
+    </main>
+    {% endblock %}
+
+    
+</body>
+</html>

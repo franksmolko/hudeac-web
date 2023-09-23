@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html>
+    <head>
+        <title>{% block title %}Join Our Mailing List{% endblock %}</title>
+    </head>
+    <body>
+        {% block content %}
+        <center><form method="post">
+            {% csrf_token %}
+            <p>First Name</p> {{ form.firstName }}
+            <br>
+            <p>Last Name</p> {{ form.lastName }}
+            <br>
+            <p>Email</p> {{ form.email }}
+            <br>
+            <p>Graduation Year</p> {{ form.gradClass }}
+            <br>
+            <input type="submit" value="Submit" class="green-btn">
+            {% if form.email.errors %}
+                <p class="error" style="color: red;">{{ form.email.errors|join:", " }}</p>
+            {% endif %}
+        </form></center>
+
+        {% endblock %}
+    </body>
+</html>

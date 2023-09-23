@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html>
+<head>
+<title>{% block title %}Home Page{% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+    <div class="card">
+        <div class="card-body card-bg">
+            <h1 class="card-title">Photo Gallery</h1>
+            <p class="card-text">View some images of our club</p>
+            <a href="{% url 'gallery' %}" class="btn green-btn">Photos</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body card-bg">
+            <h1 class="card-title">Air Quality Assessment</h1>
+            <p class="card-text">Input a desired zip code and get air quality info</p>
+            <a href="{% url 'air' %}" class="btn green-btn">AQI</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body card-bg">
+            <h1 class="card-title">Our Mission</h1>
+            <p class="card-text">Take a look at our club's purpose</p>
+            <a href="{% url 'mission' %}" class="btn green-btn">Mission</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body card-bg">
+            <h1 class="card-title">Mailing List</h1>
+            <p class="card-text">Get the latest news on our club</p>
+            <a href="{% url 'email' %}" class="btn green-btn">Sign up</a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
