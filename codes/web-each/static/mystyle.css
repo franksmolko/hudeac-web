@@ -50,7 +50,7 @@ body {
 .center{
     text-align: center;
     border: 3px solid forestgreen;
-    width: auto;
+    width: 80%;
     height: auto;
     font-size: 2vh;
     margin: auto;
