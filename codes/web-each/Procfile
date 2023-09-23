@@ -1,1 +1,1 @@
-web: airQualityProject.wsgi
+web: gunicorn airQualityProject.wsgi
